@@ -25,19 +25,11 @@ namespace desdebugger
         static extern void DisasmThumb(uint adr, uint ins, System.Text.StringBuilder str);
 
         private System.Net.Sockets.TcpClient client;
-
+        private uint memoryAdr;
+        private int insSize;
+        private uint[] registers;
 
         private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
         {
 
         }
@@ -51,20 +43,43 @@ namespace desdebugger
         {
             client = new System.Net.Sockets.TcpClient("localhost", 1234);
             UpdateRegisters();
-            var adr = 0x02000000u;
-            var memory = GetMemory16(adr, 256);
+            GotoWithUpdate(0x02000000);
+        }
+
+        private void GotoWithUpdate(uint adr)
+        {
+            insSize = 1000;
+            var offset = -500;
+            memoryAdr = (uint)(adr + offset * 2);
+            var memory = GetMemory16(memoryAdr, insSize);
             listBoxDisasm.Items.Clear();
-            for (var i = 0; i < memory.Length; i ++)
+            for (var i = 0; i < memory.Length; i++)
             {
                 var buf = new StringBuilder(256);
-                DisasmThumb(adr + (uint)(i * 2), memory[i], buf);
-                listBoxDisasm.Items.Add(String.Format("{0:x8} ", adr + i * 2) + buf.ToString().ToLower() + "\n");
+                var a = (uint)(adr + (offset + i) * 2);
+                DisasmThumb(a, memory[i], buf);
+                listBoxDisasm.Items.Add(String.Format("{0:x8} ", a) + buf.ToString().ToLower() + "\n");
             }
+            listBoxDisasm.SelectedIndex = -offset + 20;
+            listBoxDisasm.SelectedIndex = -offset;
+        }
+
+        private void Goto(uint adr)
+        {
+            if (memoryAdr <= adr && adr < memoryAdr + insSize * 2)
+            {
+
+            } else
+            {
+                GotoWithUpdate(adr);
+            }
+            listBoxDisasm.SelectedIndex = (int)(adr - memoryAdr) / 2;
         }
 
         private void UpdateRegisters()
         {
             var reg = GetRegisters();
+            registers = reg;
             listViewReg.Items.Clear();
             for (var i = 0; i < reg.Length; i++)
             {
@@ -73,7 +88,7 @@ namespace desdebugger
             }
         }
 
-        private uint[] GetMemory16(uint adr, uint size)
+        private uint[] GetMemory16(uint adr, int size)
         {
             var res = Interact(String.Format("m{0:x8},{1:X}", adr, size * 2));
             var memory = new List<uint>();
@@ -85,7 +100,7 @@ namespace desdebugger
             return memory.ToArray();
         }
 
-        private uint[] GetMemory32(uint adr, uint size)
+        private uint[] GetMemory32(uint adr, int size)
         {
             var res = Interact(String.Format("m{0:X8},{1:X}", adr, size * 4));
             var memory = new List<uint>();
@@ -146,17 +161,24 @@ namespace desdebugger
         {
             Interact("c");
             UpdateRegisters();
+            Goto(registers[15]);
         }
 
         private void buttonStep_Click(object sender, EventArgs e)
         {
             Interact("s");
             UpdateRegisters();
+            Goto(registers[15]);
         }
 
         private void buttonBp_click(object sender, EventArgs e)
         {
             Interact(String.Format("Z0,{0:x8},4", Convert.ToUInt32(textBoxBp.Text, 16)));
+        }
+
+        private void buttonGoto_Click(object sender, EventArgs e)
+        {
+            GotoWithUpdate(Convert.ToUInt32(textBoxGoto.Text, 16));
         }
     }
 }

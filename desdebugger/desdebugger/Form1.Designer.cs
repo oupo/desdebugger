@@ -34,8 +34,8 @@
             this.textBoxBp = new System.Windows.Forms.TextBox();
             this.buttonBp = new System.Windows.Forms.Button();
             this.listBoxDisasm = new System.Windows.Forms.ListBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.textBoxGoto = new System.Windows.Forms.TextBox();
+            this.buttonGoto = new System.Windows.Forms.Button();
             this.listViewReg = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -104,21 +104,22 @@
             this.listBoxDisasm.Size = new System.Drawing.Size(607, 424);
             this.listBoxDisasm.TabIndex = 6;
             // 
-            // textBox2
+            // textBoxGoto
             // 
-            this.textBox2.Location = new System.Drawing.Point(328, 128);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(127, 22);
-            this.textBox2.TabIndex = 7;
+            this.textBoxGoto.Location = new System.Drawing.Point(328, 128);
+            this.textBoxGoto.Name = "textBoxGoto";
+            this.textBoxGoto.Size = new System.Drawing.Size(127, 22);
+            this.textBoxGoto.TabIndex = 7;
             // 
-            // button4
+            // buttonGoto
             // 
-            this.button4.Location = new System.Drawing.Point(461, 128);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(63, 23);
-            this.button4.TabIndex = 8;
-            this.button4.Text = "Goto";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonGoto.Location = new System.Drawing.Point(461, 128);
+            this.buttonGoto.Name = "buttonGoto";
+            this.buttonGoto.Size = new System.Drawing.Size(63, 23);
+            this.buttonGoto.TabIndex = 8;
+            this.buttonGoto.Text = "Goto";
+            this.buttonGoto.UseVisualStyleBackColor = true;
+            this.buttonGoto.Click += new System.EventHandler(this.buttonGoto_Click);
             // 
             // listViewReg
             // 
@@ -131,7 +132,6 @@
             this.listViewReg.TabIndex = 9;
             this.listViewReg.UseCompatibleStateImageBehavior = false;
             this.listViewReg.View = System.Windows.Forms.View.Details;
-            this.listViewReg.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -166,7 +166,6 @@
             this.label2.Size = new System.Drawing.Size(22, 15);
             this.label2.TabIndex = 11;
             this.label2.Text = "～";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // buttonDisasm
             // 
@@ -228,8 +227,8 @@
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.listViewReg);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.buttonGoto);
+            this.Controls.Add(this.textBoxGoto);
             this.Controls.Add(this.listBoxDisasm);
             this.Controls.Add(this.buttonBp);
             this.Controls.Add(this.textBoxBp);
@@ -252,8 +251,8 @@
         private System.Windows.Forms.TextBox textBoxBp;
         private System.Windows.Forms.Button buttonBp;
         private System.Windows.Forms.ListBox listBoxDisasm;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox textBoxGoto;
+        private System.Windows.Forms.Button buttonGoto;
         private System.Windows.Forms.ListView listViewReg;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
