@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonContinue = new System.Windows.Forms.Button();
+            this.buttonStep = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.textBoxBp = new System.Windows.Forms.TextBox();
+            this.buttonBp = new System.Windows.Forms.Button();
             this.listBoxDisasm = new System.Windows.Forms.ListBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
@@ -49,23 +49,25 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonContinue
             // 
-            this.button1.Location = new System.Drawing.Point(14, 54);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(111, 33);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Continue";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonContinue.Location = new System.Drawing.Point(14, 54);
+            this.buttonContinue.Name = "buttonContinue";
+            this.buttonContinue.Size = new System.Drawing.Size(111, 33);
+            this.buttonContinue.TabIndex = 0;
+            this.buttonContinue.Text = "Continue";
+            this.buttonContinue.UseVisualStyleBackColor = true;
+            this.buttonContinue.Click += new System.EventHandler(this.buttonContinue_Click);
             // 
-            // button2
+            // buttonStep
             // 
-            this.button2.Location = new System.Drawing.Point(131, 54);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(111, 33);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Step";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonStep.Location = new System.Drawing.Point(131, 54);
+            this.buttonStep.Name = "buttonStep";
+            this.buttonStep.Size = new System.Drawing.Size(111, 33);
+            this.buttonStep.TabIndex = 1;
+            this.buttonStep.Text = "Step";
+            this.buttonStep.UseVisualStyleBackColor = true;
+            this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
             // 
             // label1
             // 
@@ -76,21 +78,22 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Break Point";
             // 
-            // textBox1
+            // textBoxBp
             // 
-            this.textBox1.Location = new System.Drawing.Point(100, 129);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(127, 22);
-            this.textBox1.TabIndex = 3;
+            this.textBoxBp.Location = new System.Drawing.Point(100, 129);
+            this.textBoxBp.Name = "textBoxBp";
+            this.textBoxBp.Size = new System.Drawing.Size(127, 22);
+            this.textBoxBp.TabIndex = 3;
             // 
-            // button3
+            // buttonBp
             // 
-            this.button3.Location = new System.Drawing.Point(233, 128);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(63, 23);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Set";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonBp.Location = new System.Drawing.Point(233, 128);
+            this.buttonBp.Name = "buttonBp";
+            this.buttonBp.Size = new System.Drawing.Size(63, 23);
+            this.buttonBp.TabIndex = 5;
+            this.buttonBp.Text = "Set";
+            this.buttonBp.UseVisualStyleBackColor = true;
+            this.buttonBp.Click += new System.EventHandler(this.buttonBp_click);
             // 
             // listBoxDisasm
             // 
@@ -228,11 +231,11 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.listBoxDisasm);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.buttonBp);
+            this.Controls.Add(this.textBoxBp);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonStep);
+            this.Controls.Add(this.buttonContinue);
             this.Name = "Form1";
             this.Text = "desdebugger";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -243,11 +246,11 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonContinue;
+        private System.Windows.Forms.Button buttonStep;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBoxBp;
+        private System.Windows.Forms.Button buttonBp;
         private System.Windows.Forms.ListBox listBoxDisasm;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button4;

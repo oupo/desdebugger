@@ -50,13 +50,7 @@ namespace desdebugger
         private void buttonConnect_Click(object sender, EventArgs e)
         {
             client = new System.Net.Sockets.TcpClient("localhost", 1234);
-            var reg = GetRegisters();
-            listViewReg.Items.Clear();
-            for (var i = 0; i < reg.Length; i ++)
-            {
-                string[] item = { Convert.ToString(i), String.Format("{0:x8}", reg[i]) };
-                listViewReg.Items.Add(new ListViewItem(item));
-            }
+            UpdateRegisters();
             var adr = 0x02000000u;
             var memory = GetMemory16(adr, 256);
             listBoxDisasm.Items.Clear();
@@ -66,7 +60,17 @@ namespace desdebugger
                 DisasmThumb(adr + (uint)(i * 2), memory[i], buf);
                 listBoxDisasm.Items.Add(String.Format("{0:x8} ", adr + i * 2) + buf.ToString().ToLower() + "\n");
             }
-            client.Close();
+        }
+
+        private void UpdateRegisters()
+        {
+            var reg = GetRegisters();
+            listViewReg.Items.Clear();
+            for (var i = 0; i < reg.Length; i++)
+            {
+                string[] item = { Convert.ToString(i), String.Format("{0:x8}", reg[i]) };
+                listViewReg.Items.Add(new ListViewItem(item));
+            }
         }
 
         private uint[] GetMemory16(uint adr, uint size)
@@ -107,6 +111,7 @@ namespace desdebugger
 
         private string Interact(string request)
         {
+            Console.WriteLine(request);
             var stream = client.GetStream();
             var bytes = System.Text.Encoding.UTF8.GetBytes("$" + request + "#" + String.Format("{0:X2}", Checksum(request)));
             stream.Write(bytes, 0, bytes.Length);
@@ -121,7 +126,9 @@ namespace desdebugger
             stream.ReadByte();
             stream.ReadByte();
             stream.WriteByte(Convert.ToByte('+'));
-            return System.Text.Encoding.UTF8.GetString(retBytes.ToArray());
+            var response = System.Text.Encoding.UTF8.GetString(retBytes.ToArray());
+            Console.WriteLine(response);
+            return response;
         }
 
         private int Checksum(string str)
@@ -133,6 +140,23 @@ namespace desdebugger
                 sum += c;
             }
             return (int)(sum % 256);
+        }
+
+        private void buttonContinue_Click(object sender, EventArgs e)
+        {
+            Interact("c");
+            UpdateRegisters();
+        }
+
+        private void buttonStep_Click(object sender, EventArgs e)
+        {
+            Interact("s");
+            UpdateRegisters();
+        }
+
+        private void buttonBp_click(object sender, EventArgs e)
+        {
+            Interact(String.Format("Z0,{0:x8},4", Convert.ToUInt32(textBoxBp.Text, 16)));
         }
     }
 }
