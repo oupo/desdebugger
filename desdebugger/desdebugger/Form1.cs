@@ -49,9 +49,9 @@ namespace desdebugger
         private void UpdateDisasm()
         {
             bool thumb = radioButtonThumb.Checked;
-            if (insSize != 600)
+            if (insSize != 300)
             {
-                insSize = 600;
+                insSize = 300;
                 listBoxDisasm.Items.Clear();
                 for (var i = 0; i < insSize; i++)
                 {
@@ -72,13 +72,23 @@ namespace desdebugger
                 {
                     Disasm(a, memory[i], buf);
                 }
-                listBoxDisasm.Items[i] = String.Format("{0:x8} ", a) + buf.ToString().ToLower();
+                var str = String.Format("{0:x8} ", a) + buf.ToString().ToLower();
+                var match = System.Text.RegularExpressions.Regex.Match(str, @"\[pc, #([0-9a-f]+)\]");
+                if (match.Success)
+                {
+                    var ofs = Convert.ToInt32(match.Groups[1].Value, 16);
+                    if (thumb && ((i + 2) & ~1) + ofs / 2 + 1 < memory.Length)
+                    {
+                        str = str.Substring(0, match.Index) + String.Format("#{0:x8}", memory[((i + 2) & ~1) + ofs / 2] | memory[((i + 2) & ~1) + ofs / 2 + 1] << 16);
+                    }
+                }
+                listBoxDisasm.Items[i] = str;
             }
         }
 
         private void GotoWithUpdate(uint adr)
         {
-            var offset = -300;
+            var offset = -150;
             bool thumb = radioButtonThumb.Checked;
             memoryAdr = (uint)(adr + offset * (thumb ? 2 : 4));
             UpdateDisasm();
