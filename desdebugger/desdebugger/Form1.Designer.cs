@@ -47,6 +47,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.buttonLaunch = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
+            this.radioButtonARM = new System.Windows.Forms.RadioButton();
+            this.radioButtonThumb = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // buttonContinue
@@ -213,11 +215,37 @@
             this.buttonConnect.UseVisualStyleBackColor = true;
             this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
             // 
+            // radioButtonARM
+            // 
+            this.radioButtonARM.AutoSize = true;
+            this.radioButtonARM.Checked = true;
+            this.radioButtonARM.Location = new System.Drawing.Point(541, 131);
+            this.radioButtonARM.Name = "radioButtonARM";
+            this.radioButtonARM.Size = new System.Drawing.Size(57, 19);
+            this.radioButtonARM.TabIndex = 17;
+            this.radioButtonARM.TabStop = true;
+            this.radioButtonARM.Text = "ARM";
+            this.radioButtonARM.UseVisualStyleBackColor = true;
+            this.radioButtonARM.CheckedChanged += new System.EventHandler(this.radioButtonARM_CheckedChanged);
+            // 
+            // radioButtonThumb
+            // 
+            this.radioButtonThumb.AutoSize = true;
+            this.radioButtonThumb.Location = new System.Drawing.Point(604, 131);
+            this.radioButtonThumb.Name = "radioButtonThumb";
+            this.radioButtonThumb.Size = new System.Drawing.Size(71, 19);
+            this.radioButtonThumb.TabIndex = 18;
+            this.radioButtonThumb.Text = "Thumb";
+            this.radioButtonThumb.UseVisualStyleBackColor = true;
+            this.radioButtonThumb.CheckedChanged += new System.EventHandler(this.radioButtonThumb_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 601);
+            this.Controls.Add(this.radioButtonThumb);
+            this.Controls.Add(this.radioButtonARM);
             this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.buttonLaunch);
             this.Controls.Add(this.label3);
@@ -264,6 +292,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonLaunch;
         private System.Windows.Forms.Button buttonConnect;
+        private System.Windows.Forms.RadioButton radioButtonARM;
+        private System.Windows.Forms.RadioButton radioButtonThumb;
     }
 }
 

@@ -26,7 +26,7 @@ namespace desdebugger
 
         private System.Net.Sockets.TcpClient client;
         private uint memoryAdr;
-        private int insSize;
+        private int insSize = 0;
         private uint[] registers;
 
         private void Form1_Load(object sender, EventArgs e)
@@ -46,34 +46,58 @@ namespace desdebugger
             GotoWithUpdate(0x02000000);
         }
 
-        private void GotoWithUpdate(uint adr)
+        private void UpdateDisasm()
         {
-            insSize = 1000;
-            var offset = -500;
-            memoryAdr = (uint)(adr + offset * 2);
-            var memory = GetMemory16(memoryAdr, insSize);
-            listBoxDisasm.Items.Clear();
+            bool thumb = radioButtonThumb.Checked;
+            if (insSize != 600)
+            {
+                insSize = 600;
+                listBoxDisasm.Items.Clear();
+                for (var i = 0; i < insSize; i++)
+                {
+                    listBoxDisasm.Items.Add("");
+                }
+            }
+            var memory = thumb ? GetMemory16(memoryAdr, insSize) : GetMemory32(memoryAdr, insSize);
+            
             for (var i = 0; i < memory.Length; i++)
             {
                 var buf = new StringBuilder(256);
-                var a = (uint)(adr + (offset + i) * 2);
-                DisasmThumb(a, memory[i], buf);
-                listBoxDisasm.Items.Add(String.Format("{0:x8} ", a) + buf.ToString().ToLower() + "\n");
+                var a = (uint)(memoryAdr + i * (thumb ? 2 : 4));
+                if (thumb)
+                {
+                    DisasmThumb(a, memory[i], buf);
+                }
+                else
+                {
+                    Disasm(a, memory[i], buf);
+                }
+                listBoxDisasm.Items[i] = String.Format("{0:x8} ", a) + buf.ToString().ToLower();
             }
+        }
+
+        private void GotoWithUpdate(uint adr)
+        {
+            var offset = -300;
+            bool thumb = radioButtonThumb.Checked;
+            memoryAdr = (uint)(adr + offset * (thumb ? 2 : 4));
+            UpdateDisasm();
             listBoxDisasm.SelectedIndex = -offset + 20;
             listBoxDisasm.SelectedIndex = -offset;
         }
 
         private void Goto(uint adr)
         {
+            bool thumb = radioButtonThumb.Checked;
             if (memoryAdr <= adr && adr < memoryAdr + insSize * 2)
             {
 
-            } else
+            }
+            else
             {
                 GotoWithUpdate(adr);
             }
-            listBoxDisasm.SelectedIndex = (int)(adr - memoryAdr) / 2;
+            listBoxDisasm.SelectedIndex = (int)(adr - memoryAdr) / (thumb ? 2 : 4);
         }
 
         private void UpdateRegisters()
@@ -92,10 +116,21 @@ namespace desdebugger
         {
             var res = Interact(String.Format("m{0:x8},{1:X}", adr, size * 2));
             var memory = new List<uint>();
-            for (int i = 0; i < res.Length / 4; i++)
+
+            if (res[0] == 'E')
             {
-                var str = res.Substring(i * 4, 4);
-                memory.Add(Convert.ToUInt32(str.Substring(2, 2) + str.Substring(0, 2), 16));
+                for (int i = 0; i < size; i++)
+                {
+                    memory.Add(0);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < size; i++)
+                {
+                    var str = res.Substring(i * 4, 4);
+                    memory.Add(Convert.ToUInt32(str.Substring(2, 2) + str.Substring(0, 2), 16));
+                }
             }
             return memory.ToArray();
         }
@@ -104,10 +139,20 @@ namespace desdebugger
         {
             var res = Interact(String.Format("m{0:X8},{1:X}", adr, size * 4));
             var memory = new List<uint>();
-            for (int i = 0; i < res.Length / 8; i++)
+            if (res[0] == 'E')
             {
-                var str = res.Substring(i * 8, 8);
-                memory.Add(Convert.ToUInt32(str.Substring(6, 2) + str.Substring(4, 2) + str.Substring(2, 2) + str.Substring(0, 2), 16));
+                for (int i = 0; i < size; i++)
+                {
+                    memory.Add(0);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < res.Length / 8; i++)
+                {
+                    var str = res.Substring(i * 8, 8);
+                    memory.Add(Convert.ToUInt32(str.Substring(6, 2) + str.Substring(4, 2) + str.Substring(2, 2) + str.Substring(0, 2), 16));
+                }
             }
             return memory.ToArray();
         }
@@ -179,6 +224,16 @@ namespace desdebugger
         private void buttonGoto_Click(object sender, EventArgs e)
         {
             GotoWithUpdate(Convert.ToUInt32(textBoxGoto.Text, 16));
+        }
+
+        private void radioButtonARM_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateDisasm();
+        }
+
+        private void radioButtonThumb_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateDisasm();
         }
     }
 }
