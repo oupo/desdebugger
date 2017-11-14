@@ -33,10 +33,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.listBoxDisasm = new System.Windows.Forms.ListBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewReg = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -92,14 +92,14 @@
             this.button3.Text = "Set";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // listBox1
+            // listBoxDisasm
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(15, 165);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(607, 424);
-            this.listBox1.TabIndex = 6;
+            this.listBoxDisasm.FormattingEnabled = true;
+            this.listBoxDisasm.ItemHeight = 15;
+            this.listBoxDisasm.Location = new System.Drawing.Point(15, 165);
+            this.listBoxDisasm.Name = "listBoxDisasm";
+            this.listBoxDisasm.Size = new System.Drawing.Size(607, 424);
+            this.listBoxDisasm.TabIndex = 6;
             // 
             // textBox2
             // 
@@ -117,17 +117,27 @@
             this.button4.Text = "Goto";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // listViewReg
             // 
-            this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewReg.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listView1.Location = new System.Drawing.Point(637, 165);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(238, 424);
-            this.listView1.TabIndex = 9;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listViewReg.Location = new System.Drawing.Point(642, 165);
+            this.listViewReg.Name = "listViewReg";
+            this.listViewReg.Size = new System.Drawing.Size(238, 424);
+            this.listViewReg.TabIndex = 9;
+            this.listViewReg.UseCompatibleStateImageBehavior = false;
+            this.listViewReg.View = System.Windows.Forms.View.Details;
+            this.listViewReg.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "No.";
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Value";
+            this.columnHeader2.Width = 163;
             // 
             // textBox3
             // 
@@ -214,10 +224,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox4);
             this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listViewReg);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.listBoxDisasm);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
@@ -238,10 +248,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox listBoxDisasm;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewReg;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.TextBox textBox3;
