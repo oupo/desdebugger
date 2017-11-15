@@ -49,6 +49,7 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.radioButtonARM = new System.Windows.Forms.RadioButton();
             this.radioButtonThumb = new System.Windows.Forms.RadioButton();
+            this.buttonStepOver = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonContinue
@@ -67,7 +68,7 @@
             this.buttonStep.Name = "buttonStep";
             this.buttonStep.Size = new System.Drawing.Size(111, 33);
             this.buttonStep.TabIndex = 1;
-            this.buttonStep.Text = "Step";
+            this.buttonStep.Text = "Step Into";
             this.buttonStep.UseVisualStyleBackColor = true;
             this.buttonStep.Click += new System.EventHandler(this.buttonStep_Click);
             // 
@@ -239,11 +240,22 @@
             this.radioButtonThumb.UseVisualStyleBackColor = true;
             this.radioButtonThumb.CheckedChanged += new System.EventHandler(this.radioButtonThumb_CheckedChanged);
             // 
+            // buttonStepOver
+            // 
+            this.buttonStepOver.Location = new System.Drawing.Point(248, 54);
+            this.buttonStepOver.Name = "buttonStepOver";
+            this.buttonStepOver.Size = new System.Drawing.Size(111, 33);
+            this.buttonStepOver.TabIndex = 19;
+            this.buttonStepOver.Text = "Step Over";
+            this.buttonStepOver.UseVisualStyleBackColor = true;
+            this.buttonStepOver.Click += new System.EventHandler(this.buttonStepOver_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 601);
+            this.Controls.Add(this.buttonStepOver);
             this.Controls.Add(this.radioButtonThumb);
             this.Controls.Add(this.radioButtonARM);
             this.Controls.Add(this.buttonConnect);
@@ -294,6 +306,7 @@
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.RadioButton radioButtonARM;
         private System.Windows.Forms.RadioButton radioButtonThumb;
+        private System.Windows.Forms.Button buttonStepOver;
     }
 }
 

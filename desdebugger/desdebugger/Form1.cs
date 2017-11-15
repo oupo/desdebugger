@@ -226,6 +226,19 @@ namespace desdebugger
             Goto(registers[15]);
         }
 
+        private void buttonStepOver_Click(object sender, EventArgs e)
+        {
+            uint pc = GetRegisters()[15];
+            bool thumb = radioButtonThumb.Checked;
+            uint targetPC = pc + (uint)(thumb ? 2 : 4);
+            do
+            {
+                Interact("s");
+                pc = GetRegisters()[15];
+            } while (pc != targetPC);
+            Goto(pc);
+        }
+
         private void buttonBp_click(object sender, EventArgs e)
         {
             Interact(String.Format("Z0,{0:x8},4", Convert.ToUInt32(textBoxBp.Text, 16)));
