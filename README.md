@@ -19,5 +19,5 @@ A debugger for DeSmuME.
 5. Input the memory address that you want to debug into "Break Point" and click "Set"
 6. Click "Continue"
 7. In DeSmuME, open the game rom
-8. When the game reached the address you inputed in 5, you can debug.
+8. When the game reached the address you inputted in 5, you can debug.
 
