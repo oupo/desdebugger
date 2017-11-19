@@ -47,6 +47,7 @@
             this.radioButtonThumb = new System.Windows.Forms.RadioButton();
             this.buttonStepOver = new System.Windows.Forms.Button();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.buttonRemove = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonContinue
@@ -109,14 +110,14 @@
             // 
             // textBoxGoto
             // 
-            this.textBoxGoto.Location = new System.Drawing.Point(328, 104);
+            this.textBoxGoto.Location = new System.Drawing.Point(395, 104);
             this.textBoxGoto.Name = "textBoxGoto";
             this.textBoxGoto.Size = new System.Drawing.Size(127, 22);
             this.textBoxGoto.TabIndex = 7;
             // 
             // buttonGoto
             // 
-            this.buttonGoto.Location = new System.Drawing.Point(461, 104);
+            this.buttonGoto.Location = new System.Drawing.Point(528, 104);
             this.buttonGoto.Name = "buttonGoto";
             this.buttonGoto.Size = new System.Drawing.Size(63, 23);
             this.buttonGoto.TabIndex = 8;
@@ -189,7 +190,7 @@
             // 
             this.radioButtonARM.AutoSize = true;
             this.radioButtonARM.Checked = true;
-            this.radioButtonARM.Location = new System.Drawing.Point(539, 107);
+            this.radioButtonARM.Location = new System.Drawing.Point(606, 107);
             this.radioButtonARM.Name = "radioButtonARM";
             this.radioButtonARM.Size = new System.Drawing.Size(57, 19);
             this.radioButtonARM.TabIndex = 17;
@@ -201,7 +202,7 @@
             // radioButtonThumb
             // 
             this.radioButtonThumb.AutoSize = true;
-            this.radioButtonThumb.Location = new System.Drawing.Point(602, 108);
+            this.radioButtonThumb.Location = new System.Drawing.Point(669, 108);
             this.radioButtonThumb.Name = "radioButtonThumb";
             this.radioButtonThumb.Size = new System.Drawing.Size(71, 19);
             this.radioButtonThumb.TabIndex = 18;
@@ -228,11 +229,22 @@
             this.vScrollBar1.TabIndex = 20;
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
+            // buttonRemove
+            // 
+            this.buttonRemove.Location = new System.Drawing.Point(301, 103);
+            this.buttonRemove.Name = "buttonRemove";
+            this.buttonRemove.Size = new System.Drawing.Size(78, 23);
+            this.buttonRemove.TabIndex = 21;
+            this.buttonRemove.Text = "Remove";
+            this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 601);
+            this.Controls.Add(this.buttonRemove);
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.buttonStepOver);
             this.Controls.Add(this.radioButtonThumb);
@@ -279,6 +291,7 @@
         private System.Windows.Forms.RadioButton radioButtonThumb;
         private System.Windows.Forms.Button buttonStepOver;
         private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.Button buttonRemove;
     }
 }
 

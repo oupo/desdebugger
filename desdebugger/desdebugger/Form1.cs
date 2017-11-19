@@ -377,5 +377,10 @@ namespace desdebugger
                 UpdateDisasm();
             }
         }
+
+        private void buttonRemove_Click(object sender, EventArgs e)
+        {
+            Interact(String.Format("z0,{0:x8},4", Convert.ToUInt32(textBoxBp.Text, 16)));
+        }
     }
 }
