@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-
 namespace desdebugger
 {
     public partial class Form1 : Form
@@ -226,13 +225,46 @@ namespace desdebugger
         {
             uint pc = GetRegisters()[15];
             bool thumb = radioButtonThumb.Checked;
-            uint targetPC = pc + (uint)(thumb ? 2 : 4);
-            do
+            uint destAdr;
+            string insName;
+            getBranchAddr(pc, out destAdr, out insName);
+            Console.WriteLine(destAdr);
+            Console.WriteLine(insName);
+            if (insName == "bl" || insName == "blx")
+            {
+                uint targetPC = pc + (uint)(thumb ? 2 : 4);
+                do
+                {
+                    Interact("s");
+                    pc = GetRegisters()[15];
+                } while (pc != targetPC);
+                Goto(pc);
+            }
+            else
             {
                 Interact("s");
-                pc = GetRegisters()[15];
-            } while (pc != targetPC);
-            Goto(pc);
+                UpdateRegisters();
+                Goto(registers[15]);
+            }
+        }
+
+        private bool getBranchAddr(uint addr, out uint destAdr, out string insName)
+        {
+            var thumb = radioButtonThumb.Checked;
+            var str = CreateDisasmText(thumb, addr);
+            Console.WriteLine(str);
+            var match = System.Text.RegularExpressions.Regex.Match(str, @"^[0-9a-f]+ (b|bl|blx)(?:eq|ne|cs|cc|mi|pl|vs|vc|hi|ls|ge|lt|gt|le)? #?([0-9a-f]+)");
+            if (match.Success)
+            {
+                insName = match.Groups[1].Value;
+                destAdr = Convert.ToUInt32(match.Groups[2].Value, 16);
+                return true;
+            } else
+            {
+                insName = "";
+                destAdr = 0;
+                return false;
+            }
         }
 
         private void buttonBp_click(object sender, EventArgs e)
