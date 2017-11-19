@@ -99,7 +99,7 @@
             // 
             this.listBoxDisasm.FormattingEnabled = true;
             this.listBoxDisasm.ItemHeight = 15;
-            this.listBoxDisasm.Location = new System.Drawing.Point(15, 135);
+            this.listBoxDisasm.Location = new System.Drawing.Point(14, 135);
             this.listBoxDisasm.Name = "listBoxDisasm";
             this.listBoxDisasm.Size = new System.Drawing.Size(584, 454);
             this.listBoxDisasm.TabIndex = 6;
