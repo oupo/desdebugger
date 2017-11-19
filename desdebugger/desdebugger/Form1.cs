@@ -43,10 +43,11 @@ namespace desdebugger
             GotoWithUpdate(0x02000000);
         }
 
-        private const int DISASM_LEN = 30;
+        private int DISASM_LEN = 30;
 
         private void UpdateDisasm()
         {
+            if (client == null) return;
             bool thumb = radioButtonThumb.Checked;
             if (listBoxDisasm.Items.Count != DISASM_LEN)
             {
@@ -381,6 +382,14 @@ namespace desdebugger
         private void buttonRemove_Click(object sender, EventArgs e)
         {
             Interact(String.Format("z0,{0:x8},4", Convert.ToUInt32(textBoxBp.Text, 16)));
+        }
+
+        private void listBoxDisasm_Resize(object sender, EventArgs e)
+        {
+            if (DISASM_LEN != listBoxDisasm.Height / listBoxDisasm.ItemHeight) {
+                DISASM_LEN = listBoxDisasm.Height / listBoxDisasm.ItemHeight;
+                UpdateDisasm();
+            }
         }
     }
 }
