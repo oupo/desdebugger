@@ -35,7 +35,7 @@
             this.buttonBp = new System.Windows.Forms.Button();
             this.textBoxGoto = new System.Windows.Forms.TextBox();
             this.buttonGoto = new System.Windows.Forms.Button();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.textBoxPort = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonLaunch = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
@@ -115,13 +115,13 @@
             this.buttonGoto.UseVisualStyleBackColor = true;
             this.buttonGoto.Click += new System.EventHandler(this.buttonGoto_Click);
             // 
-            // textBox5
+            // textBoxPort
             // 
-            this.textBox5.Location = new System.Drawing.Point(53, 29);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 22);
-            this.textBox5.TabIndex = 13;
-            this.textBox5.Text = "1234";
+            this.textBoxPort.Location = new System.Drawing.Point(53, 29);
+            this.textBoxPort.Name = "textBoxPort";
+            this.textBoxPort.Size = new System.Drawing.Size(100, 22);
+            this.textBoxPort.TabIndex = 13;
+            this.textBoxPort.Text = "55555";
             // 
             // label3
             // 
@@ -278,7 +278,7 @@
             this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.buttonLaunch);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.textBoxPort);
             this.Controls.Add(this.buttonGoto);
             this.Controls.Add(this.textBoxGoto);
             this.Controls.Add(this.buttonBp);
@@ -304,7 +304,7 @@
         private System.Windows.Forms.Button buttonBp;
         private System.Windows.Forms.TextBox textBoxGoto;
         private System.Windows.Forms.Button buttonGoto;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox textBoxPort;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonLaunch;
         private System.Windows.Forms.Button buttonConnect;

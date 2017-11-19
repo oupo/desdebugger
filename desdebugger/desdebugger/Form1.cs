@@ -33,14 +33,19 @@ namespace desdebugger
 
         private void buttonLaunch_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("desmume.exe", "--arm9gdb 1234");
+            System.Diagnostics.Process.Start("desmume.exe", "--arm9gdb " + GetPortNumber());
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            client = new System.Net.Sockets.TcpClient("localhost", 1234);
+            client = new System.Net.Sockets.TcpClient("localhost", GetPortNumber());
             UpdateRegisters();
             GotoWithUpdate(0x02000000);
+        }
+
+        private int GetPortNumber()
+        {
+            return Convert.ToInt32(textBoxPort.Text);
         }
 
         private int DISASM_LEN = 30;
