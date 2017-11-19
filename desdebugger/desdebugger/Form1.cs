@@ -128,7 +128,7 @@ namespace desdebugger
 
             for (int i = 0; i < size; i++)
             {
-                var res = Interact(String.Format("m{0:x8},{1:X}", adr, 2));
+                var res = Interact(String.Format("m{0:x8},{1:X}", adr + i * 2, 2));
                 if (res[0] == 'E')
                 {
                     memory.Add(0);
@@ -147,7 +147,7 @@ namespace desdebugger
 
             for (int i = 0; i < size; i++)
             {
-                var res = Interact(String.Format("m{0:x8},{1:X}", adr, 4));
+                var res = Interact(String.Format("m{0:x8},{1:X}", adr + i * 4, 4));
                 if (res[0] == 'E')
                 {
                     memory.Add(0);
@@ -186,7 +186,6 @@ namespace desdebugger
             stream.ReadByte();
             while ((c = stream.ReadByte()) != Convert.ToByte('#'))
             {
-                Console.WriteLine(""+c);
                 retBytes.Add((byte)c);
             }
             stream.ReadByte();
