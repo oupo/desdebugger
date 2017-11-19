@@ -176,7 +176,7 @@ namespace desdebugger
 
         private string Interact(string request)
         {
-            Console.WriteLine(request);
+            //Console.WriteLine(request);
             var stream = client.GetStream();
             
             var bytes = System.Text.Encoding.UTF8.GetBytes("$" + request + "#" + String.Format("{0:X2}", Checksum(request)));
@@ -193,7 +193,7 @@ namespace desdebugger
             stream.ReadByte();
             stream.WriteByte(Convert.ToByte('+'));
             var response = System.Text.Encoding.UTF8.GetString(retBytes.ToArray());
-            Console.WriteLine(response);
+            //Console.WriteLine(response);
             return response;
         }
 
@@ -286,23 +286,33 @@ namespace desdebugger
 
             if (e.KeyData == Keys.Up && listBoxDisasm.SelectedIndex == 0)
             {
-                var thumb = radioButtonThumb.Checked;
-                memoryAdr = (uint)(memoryAdr - (thumb ? 2 : 4));
-                var str = CreateDisasmText(thumb, memoryAdr);
-                listBoxDisasm.Items.RemoveAt(DISASM_LEN - 1);
-                listBoxDisasm.Items.Insert(0, str);
-                UpdateScroolbarValue();
+                DisasmUp();
             }
             if (e.KeyData == Keys.Down && listBoxDisasm.SelectedIndex == DISASM_LEN - 1)
             {
-                var thumb = radioButtonThumb.Checked;
-                memoryAdr = (uint)(memoryAdr + (thumb ? 2 : 4));
-                var adr = (uint)(memoryAdr + (DISASM_LEN - 1) * (thumb ? 2 : 4));
-                var str = CreateDisasmText(thumb, adr);
-                listBoxDisasm.Items.RemoveAt(0);
-                listBoxDisasm.Items.Add(str);
-                UpdateScroolbarValue();
+                DisasmDown();
             }
+        }
+
+        private void DisasmUp()
+        {
+            var thumb = radioButtonThumb.Checked;
+            memoryAdr = (uint)(memoryAdr - (thumb ? 2 : 4));
+            var str = CreateDisasmText(thumb, memoryAdr);
+            listBoxDisasm.Items.RemoveAt(DISASM_LEN - 1);
+            listBoxDisasm.Items.Insert(0, str);
+            UpdateScroolbarValue();
+        }
+
+        private void DisasmDown()
+        {
+            var thumb = radioButtonThumb.Checked;
+            memoryAdr = (uint)(memoryAdr + (thumb ? 2 : 4));
+            var adr = (uint)(memoryAdr + (DISASM_LEN - 1) * (thumb ? 2 : 4));
+            var str = CreateDisasmText(thumb, adr);
+            listBoxDisasm.Items.RemoveAt(0);
+            listBoxDisasm.Items.Add(str);
+            UpdateScroolbarValue();
         }
 
         const uint MEMORY_MAX = 0x08000000;
@@ -314,11 +324,26 @@ namespace desdebugger
                vScrollBar1.Value = value;
             }
         }
-
+        
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            memoryAdr = (uint)((double)vScrollBar1.Value / vScrollBar1.Maximum * MEMORY_MAX);
-            UpdateDisasm();
+            if (e.NewValue == e.OldValue)
+            {
+                // do nothing
+            }
+            else if (e.NewValue == e.OldValue - 1)
+            {
+                DisasmUp();
+            }
+            else if (e.NewValue == e.OldValue + 1)
+            {
+                DisasmDown();
+            }
+            else
+            {
+                memoryAdr = (uint)((double)vScrollBar1.Value / vScrollBar1.Maximum * MEMORY_MAX) & unchecked((uint)~3);
+                UpdateDisasm();
+            }
         }
     }
 }
