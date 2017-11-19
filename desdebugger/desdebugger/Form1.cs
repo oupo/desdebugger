@@ -26,7 +26,6 @@ namespace desdebugger
 
         private System.Net.Sockets.TcpClient client;
         private uint memoryAdr;
-        private int insSize = 0;
         private uint[] registers;
 
         private void Form1_Load(object sender, EventArgs e)
@@ -45,60 +44,63 @@ namespace desdebugger
             GotoWithUpdate(0x02000000);
         }
 
+        private const int DISASM_LEN = 30;
+
         private void UpdateDisasm()
         {
             bool thumb = radioButtonThumb.Checked;
-            if (insSize != 300)
+            if (listBoxDisasm.Items.Count != DISASM_LEN)
             {
-                insSize = 300;
                 listBoxDisasm.Items.Clear();
-                for (var i = 0; i < insSize; i++)
+                for (var i = 0; i < DISASM_LEN; i++)
                 {
                     listBoxDisasm.Items.Add("");
                 }
             }
-            var memory = thumb ? GetMemory16(memoryAdr, insSize) : GetMemory32(memoryAdr, insSize);
-            
-            for (var i = 0; i < memory.Length; i++)
+            for (var i = 0; i < DISASM_LEN; i++)
             {
-                var buf = new StringBuilder(256);
-                var a = (uint)(memoryAdr + i * (thumb ? 2 : 4));
+                var adr = (uint)(memoryAdr + i * (thumb ? 2 : 4));
+                listBoxDisasm.Items[i] = CreateDisasmText(thumb, adr);
+            }
+            UpdateScroolbarValue();
+        }
+
+        private string CreateDisasmText(bool thumb, uint adr)
+        {
+            var buf = new StringBuilder(256);
+            var ins = thumb ? GetMemory16(adr, 1)[0] : GetMemory32(adr, 1)[0];
+            if (thumb)
+            {
+                DisasmThumb(adr, ins, buf);
+            }
+            else
+            {
+                Disasm(adr, ins, buf);
+            }
+            var str = String.Format("{0:x8} ", adr) + buf.ToString().ToLower();
+            var match = System.Text.RegularExpressions.Regex.Match(str, @"\[pc, #([0-9a-f]+)\]");
+            if (match.Success)
+            {
+                var ofs = Convert.ToInt32(match.Groups[1].Value, 16);
                 if (thumb)
                 {
-                    DisasmThumb(a, memory[i], buf);
+                    str = str.Substring(0, match.Index) + String.Format("#{0:x8}", GetMemory32((uint)(((adr + 4) & ~3) + ofs), 1)[0]);
                 }
-                else
-                {
-                    Disasm(a, memory[i], buf);
-                }
-                var str = String.Format("{0:x8} ", a) + buf.ToString().ToLower();
-                var match = System.Text.RegularExpressions.Regex.Match(str, @"\[pc, #([0-9a-f]+)\]");
-                if (match.Success)
-                {
-                    var ofs = Convert.ToInt32(match.Groups[1].Value, 16);
-                    if (thumb && ((i + 2) & ~1) + ofs / 2 + 1 < memory.Length)
-                    {
-                        str = str.Substring(0, match.Index) + String.Format("#{0:x8}", memory[((i + 2) & ~1) + ofs / 2] | memory[((i + 2) & ~1) + ofs / 2 + 1] << 16);
-                    }
-                }
-                listBoxDisasm.Items[i] = str;
             }
+            return str;
         }
 
         private void GotoWithUpdate(uint adr)
         {
-            var offset = -150;
             bool thumb = radioButtonThumb.Checked;
-            memoryAdr = (uint)(adr + offset * (thumb ? 2 : 4));
+            memoryAdr = (uint)(adr);
             UpdateDisasm();
-            listBoxDisasm.SelectedIndex = -offset + 20;
-            listBoxDisasm.SelectedIndex = -offset;
         }
 
         private void Goto(uint adr)
         {
             bool thumb = radioButtonThumb.Checked;
-            if (memoryAdr <= adr && adr < memoryAdr + insSize * (thumb ? 2 : 4))
+            if (memoryAdr <= adr && adr < memoryAdr + DISASM_LEN * (thumb ? 2 : 4))
             {
 
             }
@@ -154,7 +156,6 @@ namespace desdebugger
                 }
                 else
                 {
-
                     memory.Add(Convert.ToUInt32(res.Substring(6, 2) + res.Substring(4, 2) + res.Substring(2, 2) + res.Substring(0, 2), 16));
                 }
             }
@@ -269,6 +270,55 @@ namespace desdebugger
             form.Dispose();
             ChangeRegister(item.Index, value);
             UpdateRegisters();
+        }
+
+        private void listBoxDisasm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+        }
+
+        private void listBoxDisasm_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void listBoxDisasm_KeyDown(object sender, KeyEventArgs e)
+        {
+
+            if (e.KeyData == Keys.Up && listBoxDisasm.SelectedIndex == 0)
+            {
+                var thumb = radioButtonThumb.Checked;
+                memoryAdr = (uint)(memoryAdr - (thumb ? 2 : 4));
+                var str = CreateDisasmText(thumb, memoryAdr);
+                listBoxDisasm.Items.RemoveAt(DISASM_LEN - 1);
+                listBoxDisasm.Items.Insert(0, str);
+                UpdateScroolbarValue();
+            }
+            if (e.KeyData == Keys.Down && listBoxDisasm.SelectedIndex == DISASM_LEN - 1)
+            {
+                var thumb = radioButtonThumb.Checked;
+                memoryAdr = (uint)(memoryAdr + (thumb ? 2 : 4));
+                var adr = (uint)(memoryAdr + (DISASM_LEN - 1) * (thumb ? 2 : 4));
+                var str = CreateDisasmText(thumb, adr);
+                listBoxDisasm.Items.RemoveAt(0);
+                listBoxDisasm.Items.Add(str);
+                UpdateScroolbarValue();
+            }
+        }
+
+        const uint MEMORY_MAX = 0x08000000;
+
+        private void UpdateScroolbarValue()
+        {
+            int value = (int)Math.Round((double)memoryAdr / MEMORY_MAX * vScrollBar1.Maximum);
+            if (vScrollBar1.Minimum <= value && value <= vScrollBar1.Maximum) {
+               vScrollBar1.Value = value;
+            }
+        }
+
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            memoryAdr = (uint)((double)vScrollBar1.Value / vScrollBar1.Maximum * MEMORY_MAX);
+            UpdateDisasm();
         }
     }
 }

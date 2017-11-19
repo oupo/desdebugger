@@ -37,8 +37,8 @@
             this.textBoxGoto = new System.Windows.Forms.TextBox();
             this.buttonGoto = new System.Windows.Forms.Button();
             this.listViewReg = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonLaunch = new System.Windows.Forms.Button();
@@ -46,6 +46,7 @@
             this.radioButtonARM = new System.Windows.Forms.RadioButton();
             this.radioButtonThumb = new System.Windows.Forms.RadioButton();
             this.buttonStepOver = new System.Windows.Forms.Button();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.SuspendLayout();
             // 
             // buttonContinue
@@ -100,8 +101,11 @@
             this.listBoxDisasm.ItemHeight = 15;
             this.listBoxDisasm.Location = new System.Drawing.Point(15, 135);
             this.listBoxDisasm.Name = "listBoxDisasm";
-            this.listBoxDisasm.Size = new System.Drawing.Size(607, 454);
+            this.listBoxDisasm.Size = new System.Drawing.Size(584, 454);
             this.listBoxDisasm.TabIndex = 6;
+            this.listBoxDisasm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxDisasm_KeyDown);
+            this.listBoxDisasm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.listBoxDisasm_KeyPress);
+            this.listBoxDisasm.KeyUp += new System.Windows.Forms.KeyEventHandler(this.listBoxDisasm_KeyUp);
             // 
             // textBoxGoto
             // 
@@ -133,16 +137,16 @@
             this.listViewReg.View = System.Windows.Forms.View.Details;
             this.listViewReg.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewReg_MouseDoubleClick);
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.DisplayIndex = 0;
-            this.columnHeader1.Text = "No.";
-            // 
             // columnHeader2
             // 
             this.columnHeader2.DisplayIndex = 1;
             this.columnHeader2.Text = "Value";
             this.columnHeader2.Width = 163;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.DisplayIndex = 0;
+            this.columnHeader1.Text = "No.";
             // 
             // textBox5
             // 
@@ -215,11 +219,21 @@
             this.buttonStepOver.UseVisualStyleBackColor = true;
             this.buttonStepOver.Click += new System.EventHandler(this.buttonStepOver_Click);
             // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Location = new System.Drawing.Point(602, 135);
+            this.vScrollBar1.Maximum = 65536;
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(21, 454);
+            this.vScrollBar1.TabIndex = 20;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(974, 601);
+            this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.buttonStepOver);
             this.Controls.Add(this.radioButtonThumb);
             this.Controls.Add(this.radioButtonARM);
@@ -264,6 +278,7 @@
         private System.Windows.Forms.RadioButton radioButtonARM;
         private System.Windows.Forms.RadioButton radioButtonThumb;
         private System.Windows.Forms.Button buttonStepOver;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
     }
 }
 
