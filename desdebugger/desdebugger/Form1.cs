@@ -98,7 +98,7 @@ namespace desdebugger
         private void Goto(uint adr)
         {
             bool thumb = radioButtonThumb.Checked;
-            if (memoryAdr <= adr && adr < memoryAdr + insSize * 2)
+            if (memoryAdr <= adr && adr < memoryAdr + insSize * (thumb ? 2 : 4))
             {
 
             }
@@ -124,22 +124,18 @@ namespace desdebugger
 
         private uint[] GetMemory16(uint adr, int size)
         {
-            var res = Interact(String.Format("m{0:x8},{1:X}", adr, size * 2));
             var memory = new List<uint>();
 
-            if (res[0] == 'E')
+            for (int i = 0; i < size; i++)
             {
-                for (int i = 0; i < size; i++)
+                var res = Interact(String.Format("m{0:x8},{1:X}", adr, 2));
+                if (res[0] == 'E')
                 {
                     memory.Add(0);
                 }
-            }
-            else
-            {
-                for (int i = 0; i < size; i++)
+                else
                 {
-                    var str = res.Substring(i * 4, 4);
-                    memory.Add(Convert.ToUInt32(str.Substring(2, 2) + str.Substring(0, 2), 16));
+                    memory.Add(Convert.ToUInt32(res.Substring(2, 2) + res.Substring(0, 2), 16));
                 }
             }
             return memory.ToArray();
@@ -147,21 +143,19 @@ namespace desdebugger
 
         private uint[] GetMemory32(uint adr, int size)
         {
-            var res = Interact(String.Format("m{0:X8},{1:X}", adr, size * 4));
             var memory = new List<uint>();
-            if (res[0] == 'E')
+
+            for (int i = 0; i < size; i++)
             {
-                for (int i = 0; i < size; i++)
+                var res = Interact(String.Format("m{0:x8},{1:X}", adr, 4));
+                if (res[0] == 'E')
                 {
                     memory.Add(0);
                 }
-            }
-            else
-            {
-                for (int i = 0; i < res.Length / 8; i++)
+                else
                 {
-                    var str = res.Substring(i * 8, 8);
-                    memory.Add(Convert.ToUInt32(str.Substring(6, 2) + str.Substring(4, 2) + str.Substring(2, 2) + str.Substring(0, 2), 16));
+
+                    memory.Add(Convert.ToUInt32(res.Substring(6, 2) + res.Substring(4, 2) + res.Substring(2, 2) + res.Substring(0, 2), 16));
                 }
             }
             return memory.ToArray();
@@ -183,6 +177,7 @@ namespace desdebugger
         {
             Console.WriteLine(request);
             var stream = client.GetStream();
+            
             var bytes = System.Text.Encoding.UTF8.GetBytes("$" + request + "#" + String.Format("{0:X2}", Checksum(request)));
             stream.Write(bytes, 0, bytes.Length);
             var retBytes = new List<byte>();
@@ -191,6 +186,7 @@ namespace desdebugger
             stream.ReadByte();
             while ((c = stream.ReadByte()) != Convert.ToByte('#'))
             {
+                Console.WriteLine(""+c);
                 retBytes.Add((byte)c);
             }
             stream.ReadByte();
