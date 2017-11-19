@@ -31,7 +31,6 @@ namespace desdebugger
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void buttonLaunch_Click(object sender, EventArgs e)
@@ -117,8 +116,9 @@ namespace desdebugger
             listViewReg.Items.Clear();
             for (var i = 0; i < reg.Length; i++)
             {
-                string[] item = { Convert.ToString(i), String.Format("{0:x8}", reg[i]) };
-                listViewReg.Items.Add(new ListViewItem(item));
+                string[] strings = { String.Format("{0:x8}", reg[i]), Convert.ToString(i) };
+                var item = new ListViewItem(strings);
+                listViewReg.Items.Add(item);
             }
         }
 
@@ -257,6 +257,23 @@ namespace desdebugger
         private void radioButtonThumb_CheckedChanged(object sender, EventArgs e)
         {
             UpdateDisasm();
+        }
+
+        private void ChangeRegister(int index, uint value)
+        {
+            Interact(String.Format("P{0:x}={1:x2}{2:x2}{3:x2}{4:x2}", index, value & 0xff, value >> 8 & 0xff, value >> 16 & 0xff, value >> 24 & 0xff));
+        }
+
+        private void listViewReg_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            var form = new FormSetRegister();
+            var item = listViewReg.SelectedItems[0];
+            form.SetValue(Convert.ToUInt32(item.Text));
+            form.ShowDialog(this);
+            var value = form.GetValue();
+            form.Dispose();
+            ChangeRegister(item.Index, value);
+            UpdateRegisters();
         }
     }
 }

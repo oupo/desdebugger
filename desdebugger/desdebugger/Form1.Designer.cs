@@ -39,10 +39,6 @@
             this.listViewReg = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.buttonDisasm = new System.Windows.Forms.Button();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.buttonLaunch = new System.Windows.Forms.Button();
@@ -75,7 +71,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 136);
+            this.label1.Location = new System.Drawing.Point(11, 104);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 15);
             this.label1.TabIndex = 2;
@@ -83,14 +79,14 @@
             // 
             // textBoxBp
             // 
-            this.textBoxBp.Location = new System.Drawing.Point(100, 129);
+            this.textBoxBp.Location = new System.Drawing.Point(99, 104);
             this.textBoxBp.Name = "textBoxBp";
             this.textBoxBp.Size = new System.Drawing.Size(127, 22);
             this.textBoxBp.TabIndex = 3;
             // 
             // buttonBp
             // 
-            this.buttonBp.Location = new System.Drawing.Point(233, 128);
+            this.buttonBp.Location = new System.Drawing.Point(232, 103);
             this.buttonBp.Name = "buttonBp";
             this.buttonBp.Size = new System.Drawing.Size(63, 23);
             this.buttonBp.TabIndex = 5;
@@ -102,21 +98,21 @@
             // 
             this.listBoxDisasm.FormattingEnabled = true;
             this.listBoxDisasm.ItemHeight = 15;
-            this.listBoxDisasm.Location = new System.Drawing.Point(15, 165);
+            this.listBoxDisasm.Location = new System.Drawing.Point(15, 135);
             this.listBoxDisasm.Name = "listBoxDisasm";
-            this.listBoxDisasm.Size = new System.Drawing.Size(607, 424);
+            this.listBoxDisasm.Size = new System.Drawing.Size(607, 454);
             this.listBoxDisasm.TabIndex = 6;
             // 
             // textBoxGoto
             // 
-            this.textBoxGoto.Location = new System.Drawing.Point(328, 128);
+            this.textBoxGoto.Location = new System.Drawing.Point(328, 104);
             this.textBoxGoto.Name = "textBoxGoto";
             this.textBoxGoto.Size = new System.Drawing.Size(127, 22);
             this.textBoxGoto.TabIndex = 7;
             // 
             // buttonGoto
             // 
-            this.buttonGoto.Location = new System.Drawing.Point(461, 128);
+            this.buttonGoto.Location = new System.Drawing.Point(461, 104);
             this.buttonGoto.Name = "buttonGoto";
             this.buttonGoto.Size = new System.Drawing.Size(63, 23);
             this.buttonGoto.TabIndex = 8;
@@ -127,57 +123,26 @@
             // listViewReg
             // 
             this.listViewReg.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listViewReg.Location = new System.Drawing.Point(642, 165);
+            this.columnHeader2,
+            this.columnHeader1});
+            this.listViewReg.Location = new System.Drawing.Point(642, 135);
             this.listViewReg.Name = "listViewReg";
-            this.listViewReg.Size = new System.Drawing.Size(238, 424);
+            this.listViewReg.Size = new System.Drawing.Size(238, 454);
             this.listViewReg.TabIndex = 9;
             this.listViewReg.UseCompatibleStateImageBehavior = false;
             this.listViewReg.View = System.Windows.Forms.View.Details;
+            this.listViewReg.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewReg_MouseDoubleClick);
             // 
             // columnHeader1
             // 
+            this.columnHeader1.DisplayIndex = 0;
             this.columnHeader1.Text = "No.";
             // 
             // columnHeader2
             // 
+            this.columnHeader2.DisplayIndex = 1;
             this.columnHeader2.Text = "Value";
             this.columnHeader2.Width = 163;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(15, 96);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 22);
-            this.textBox3.TabIndex = 10;
-            this.textBox3.Text = "02000000";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(149, 96);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 22);
-            this.textBox4.TabIndex = 10;
-            this.textBox4.Text = "02400000";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(121, 99);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(22, 15);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "～";
-            // 
-            // buttonDisasm
-            // 
-            this.buttonDisasm.Location = new System.Drawing.Point(255, 95);
-            this.buttonDisasm.Name = "buttonDisasm";
-            this.buttonDisasm.Size = new System.Drawing.Size(107, 23);
-            this.buttonDisasm.TabIndex = 12;
-            this.buttonDisasm.Text = "Disassemble";
-            this.buttonDisasm.UseVisualStyleBackColor = true;
             // 
             // textBox5
             // 
@@ -220,7 +185,7 @@
             // 
             this.radioButtonARM.AutoSize = true;
             this.radioButtonARM.Checked = true;
-            this.radioButtonARM.Location = new System.Drawing.Point(541, 131);
+            this.radioButtonARM.Location = new System.Drawing.Point(539, 107);
             this.radioButtonARM.Name = "radioButtonARM";
             this.radioButtonARM.Size = new System.Drawing.Size(57, 19);
             this.radioButtonARM.TabIndex = 17;
@@ -232,7 +197,7 @@
             // radioButtonThumb
             // 
             this.radioButtonThumb.AutoSize = true;
-            this.radioButtonThumb.Location = new System.Drawing.Point(604, 131);
+            this.radioButtonThumb.Location = new System.Drawing.Point(602, 108);
             this.radioButtonThumb.Name = "radioButtonThumb";
             this.radioButtonThumb.Size = new System.Drawing.Size(71, 19);
             this.radioButtonThumb.TabIndex = 18;
@@ -262,10 +227,6 @@
             this.Controls.Add(this.buttonLaunch);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.buttonDisasm);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.listViewReg);
             this.Controls.Add(this.buttonGoto);
             this.Controls.Add(this.textBoxGoto);
@@ -296,10 +257,6 @@
         private System.Windows.Forms.ListView listViewReg;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button buttonDisasm;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button buttonLaunch;
