@@ -302,7 +302,7 @@ namespace desdebugger
         {
             var form = new FormSetRegister();
             var item = listViewReg.SelectedItems[0];
-            form.SetValue(Convert.ToUInt32(item.Text));
+            form.SetValue(Convert.ToUInt32(item.Text, 16));
             form.ShowDialog(this);
             var value = form.GetValue();
             form.Dispose();
