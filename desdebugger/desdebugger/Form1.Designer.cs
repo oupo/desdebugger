@@ -229,6 +229,7 @@
             this.listViewReg.TabIndex = 22;
             this.listViewReg.UseCompatibleStateImageBehavior = false;
             this.listViewReg.View = System.Windows.Forms.View.Details;
+            this.listViewReg.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewReg_MouseDoubleClick);
             // 
             // columnHeader2
             // 
@@ -251,6 +252,7 @@
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(20, 456);
             this.vScrollBar1.TabIndex = 21;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
             // listBoxDisasm
             // 
@@ -263,6 +265,7 @@
             this.listBoxDisasm.Name = "listBoxDisasm";
             this.listBoxDisasm.Size = new System.Drawing.Size(589, 439);
             this.listBoxDisasm.TabIndex = 7;
+            this.listBoxDisasm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxDisasm_KeyDown);
             this.listBoxDisasm.Resize += new System.EventHandler(this.listBoxDisasm_Resize);
             // 
             // Form1
